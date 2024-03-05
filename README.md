@@ -1,6 +1,6 @@
-## TODO: make proper installation script
+## Nvim Configuration
 
 # Nvim configuration files
 
-To install Nvim config files, copy the nvim/ directory into ~/.config
+To install Nvim config files, git clone this repo directory into ~/.config
 
