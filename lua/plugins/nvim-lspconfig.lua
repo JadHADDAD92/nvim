@@ -111,39 +111,6 @@ return { -- LSP Configuration & Plugins
             callback = vim.lsp.buf.clear_references,
           })
         end
-
-        -- AUTOFORMAT ON SAVE
-        local _augroups = {}
-        local get_augroup = function(c)
-          if not _augroups[c.id] then
-            local group_name = 'kickstart-lsp-format-' .. c.name
-            local id = vim.api.nvim_create_augroup(group_name, { clear = true })
-            _augroups[c.id] = id
-          end
-
-          return _augroups[client.id]
-        end
-        -- Create an autocmd that will run *before* we save the buffer.
-        --  Run the formatting command for the LSP that has just attached.
-        vim.api.nvim_create_autocmd('BufWritePre', {
-          group = get_augroup(client),
-          buffer = event.buf,
-          callback = function()
-            vim.lsp.buf.format {
-              async = false,
-              filter = function(c)
-                return c.name ~= "copilot"
-              end,
-            }
-            if client.name == 'ruff_lsp' then
-              vim.lsp.buf.code_action({
-                context = { only = { "source.organizeImports" } },
-                apply = true,
-              })
-              vim.wait(50) -- Wait for the code action to apply, because code actions are async
-            end
-          end,
-        })
       end,
     })
 
