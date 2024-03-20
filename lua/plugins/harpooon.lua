@@ -17,7 +17,7 @@ return {
 			harpoon:list():append()
 		end, { desc = "Add current file to Harpoon" })
 
-		nmap("<C-e>", function()
+		nmap("<C-g>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, { desc = "Show list of marks in Harpoon" })
 
