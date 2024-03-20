@@ -70,6 +70,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				find_files = {
 					hidden = true,
 				},
+				buffers = {
+					mappings = {
+						i = {
+							["<C-d>"] = "delete_buffer",
+						},
+					},
+				},
 			},
 			extensions = {
 				["ui-select"] = {
