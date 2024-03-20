@@ -28,6 +28,15 @@ return {
 					update_in_insert = true,
 				},
 			},
+			lualine_c = {
+				{
+					"filename",
+					file_status = true,
+					symbols = { modified = "\u{e0cf}" },
+				},
+			},
+
+			lualine_x = { "encoding", "filetype" },
 		},
 	},
 }
