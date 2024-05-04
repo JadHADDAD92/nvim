@@ -14,7 +14,7 @@ return {
 		end
 
 		nmap("<leader>a", function()
-			harpoon:list():append()
+			harpoon:list():add()
 		end, { desc = "Add current file to Harpoon" })
 
 		nmap("<C-g>", function()
