@@ -44,3 +44,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 -- Shortcut to open NetRW
 vim.keymap.set("n", "<leader>pd", vim.cmd.Ex)
+
+-- Shortcut to toggle Inlay Hints
+vim.keymap.set("n", "<leader>tih", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+end, { desc = "Toggle Inlay Hints" })
