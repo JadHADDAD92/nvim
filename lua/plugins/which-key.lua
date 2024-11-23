@@ -1,30 +1,72 @@
 return {
 	"folke/which-key.nvim",
-	event = "VimEnter", -- Sets the loading event to 'VimEnter'
-	config = function() -- This is the function that runs, AFTER loading
-		require("which-key").setup()
-
-		-- Document existing key chains
-		require("which-key").register({
-			["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
-			["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
-			["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
-			["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
-			["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
-			["<leader>h"] = { name = "[H]unk", _ = "which_key_ignore" },
-			["<leader>n"] = {
-				name = "Neotest",
-				a = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
-				f = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
-				F = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Debug File" },
-				l = { "<cmd>lua require('neotest').run.run_last()<cr>", "Run Last" },
-				L = { "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>", "Debug Last" },
-				n = { "<cmd>lua require('neotest').run.run()<cr>", "Run Nearest" },
-				N = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>", "Debug Nearest" },
-				o = { "<cmd>lua require('neotest').output.open({ enter = true })<cr>", "Output" },
-				S = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
-				s = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
+	event = "VimEnter", -- Load on VimEnter
+	config = function()
+		require("which-key").setup({
+			icons = {
+				mappings = vim.g.have_nerd_font,
+				keys = vim.g.have_nerd_font and {} or {
+					Up = "<Up> ",
+					Down = "<Down> ",
+					Left = "<Left> ",
+					Right = "<Right> ",
+					C = "<C-…> ",
+					M = "<M-…> ",
+					D = "<D-…> ",
+					S = "<S-…> ",
+					CR = "<CR> ",
+					Esc = "<Esc> ",
+					ScrollWheelDown = "<ScrollWheelDown> ",
+					ScrollWheelUp = "<ScrollWheelUp> ",
+					NL = "<NL> ",
+					BS = "<BS> ",
+					Space = "<Space> ",
+					Tab = "<Tab> ",
+					F1 = "<F1>",
+					F2 = "<F2>",
+					F3 = "<F3>",
+					F4 = "<F4>",
+					F5 = "<F5>",
+					F6 = "<F6>",
+					F7 = "<F7>",
+					F8 = "<F8>",
+					F9 = "<F9>",
+					F10 = "<F10>",
+					F11 = "<F11>",
+					F12 = "<F12>",
+				},
 			},
+		})
+
+		-- Mappings with updated spec format
+		require("which-key").add({
+			{ "<leader>c", group = "[C]ode" },
+			{ "<leader>c_", hidden = true },
+			{ "<leader>d", group = "[D]ocument" },
+			{ "<leader>d_", hidden = true },
+			{ "<leader>r", group = "[R]ename" },
+			{ "<leader>r_", hidden = true },
+			{ "<leader>s", group = "[S]earch" },
+			{ "<leader>s_", hidden = true },
+			{ "<leader>w", group = "[W]orkspace" },
+			{ "<leader>w_", hidden = true },
+			{ "<leader>h", group = "[H]unk" },
+			{ "<leader>h_", hidden = true },
+			{ "<leader>n", group = "Neotest" },
+			{
+				"<leader>nF",
+				desc = "Debug File",
+				"<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>",
+			},
+			{ "<leader>nL", desc = "Debug Last", "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>" },
+			{ "<leader>nN", desc = "Debug Nearest", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>" },
+			{ "<leader>nS", desc = "Stop", "<cmd>lua require('neotest').run.stop()<cr>" },
+			{ "<leader>na", desc = "Attach", "<cmd>lua require('neotest').run.attach()<cr>" },
+			{ "<leader>nf", desc = "Run File", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>" },
+			{ "<leader>nl", desc = "Run Last", "<cmd>lua require('neotest').run.run_last()<cr>" },
+			{ "<leader>nn", desc = "Run Nearest", "<cmd>lua require('neotest').run.run()<cr>" },
+			{ "<leader>no", desc = "Output", "<cmd>lua require('neotest').output.open({ enter = true })<cr>" },
+			{ "<leader>ns", desc = "Summary", "<cmd>lua require('neotest').summary.toggle()<cr>" },
 		})
 	end,
 }
