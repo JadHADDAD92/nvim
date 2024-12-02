@@ -138,7 +138,7 @@ return { -- LSP Configuration & Plugins
 				},
 				disableOrganizeImports = true,
 			},
-			ruff_lsp = {},
+			ruff = {},
 			lua_ls = {
 				settings = {
 					Lua = {
