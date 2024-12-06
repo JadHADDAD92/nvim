@@ -64,3 +64,6 @@ vim.o.termguicolors = true
 
 -- Keep sign column on by default
 vim.opt.signcolumn = "yes:2"
+
+-- Enable executing local nvim configs per project
+vim.o.exrc = true
