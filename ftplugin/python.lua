@@ -77,4 +77,3 @@ vim.api.nvim_create_autocmd({ "InsertLeave" }, {
 		end
 	end,
 })
-print("Python ftplugin loaded")
