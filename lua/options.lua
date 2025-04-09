@@ -67,3 +67,6 @@ vim.opt.signcolumn = "yes:2"
 
 -- Enable executing local nvim configs per project
 vim.o.exrc = true
+
+-- Display diagnostics on all lines
+vim.diagnostic.config({ virtual_text = true })
