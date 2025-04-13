@@ -129,5 +129,38 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>sn", function()
 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
 		end, { desc = "[S]earch [N]eovim files" })
+
+		local actions = require("telescope.actions")
+		local action_state = require("telescope.actions.state")
+		local pickers = require("telescope.pickers")
+		local finders = require("telescope.finders")
+		local sorters = require("telescope.sorters")
+
+		local function live_grep_in_selected_folder()
+			-- Run fd to list directories
+			local output = vim.fn.systemlist({ "fd", "--type", "d", "--hidden", "--exclude", ".git" })
+
+			pickers
+				.new({}, {
+					prompt_title = "Select Folder for Live Grep",
+					finder = finders.new_table({
+						results = output,
+					}),
+					sorter = sorters.get_generic_fuzzy_sorter(),
+					attach_mappings = function(prompt_bufnr, _)
+						actions.select_default:replace(function()
+							actions.close(prompt_bufnr)
+							local selection = action_state.get_selected_entry()
+							local dir = selection[1]
+							builtin.live_grep({ search_dirs = { dir } })
+						end)
+						return true
+					end,
+				})
+				:find()
+		end
+		vim.keymap.set("n", "<leader>sg", function()
+			live_grep_in_selected_folder()
+		end, { desc = "[S]earch [G]rep in folder" })
 	end,
 }
