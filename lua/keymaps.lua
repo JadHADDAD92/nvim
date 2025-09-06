@@ -12,7 +12,39 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+
+vim.keymap.set("n", "<leader>e", function()
+	-- If a diagnostic float we opened is still around, jump into it
+	local win = vim.b.diag_float_win
+	if win and vim.api.nvim_win_is_valid(win) then
+		vim.api.nvim_set_current_win(win)
+		return
+	end
+
+	-- Otherwise open a new one (focusable so we can select/yank)
+	local _, w = vim.diagnostic.open_float(nil, {
+		scope = "line",
+		source = true,
+		border = "rounded",
+		focusable = true,
+	})
+
+	-- Remember the window so a second press can focus it
+	if w and vim.api.nvim_win_is_valid(w) then
+		vim.b.diag_float_win = w
+
+		-- Clear the handle when the float closes
+		vim.api.nvim_create_autocmd("WinClosed", {
+			once = true,
+			callback = function(args)
+				if tonumber(args.match) == w then
+					vim.b.diag_float_win = nil
+				end
+			end,
+		})
+	end
+end, { desc = "Show/focus diagnostic [E]rror float" })
+
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier

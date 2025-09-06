@@ -1,7 +1,7 @@
 return { -- Fuzzy Finder (files, lsp, etc)
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
-	branch = "0.1.x",
+	branch = "master", --"0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ -- If encountering errors, see telescope-fzf-native README for install instructions
@@ -102,6 +102,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>ss", function()
 			builtin.builtin({ include_extensions = true })
 		end, { desc = "[S]earch [S]elect Telescope" })
+
+		vim.keymap.set("n", "<leader>so", function()
+			require("telescope").extensions.orgmode.search_headings()
+		end, { desc = "[S]earch [O]rg Headings" })
+
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
