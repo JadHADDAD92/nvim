@@ -10,6 +10,13 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
 			untracked = { text = "┆" },
 		},
 
+		preview_config = {
+			-- Options passed to nvim_open_win
+			border = 'rounded',
+			relative = 'cursor',
+			row = 1,
+			col = 1
+		},
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
 
@@ -61,6 +68,7 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
 			map("n", "<leader>hb", function()
 				gs.blame_line({ full = false })
 			end, { desc = "git blame line" })
+			map("n", "<leader>hB", gs.blame, { desc = "git blame fileline" })
 			map("n", "<leader>hd", gs.diffthis, { desc = "git diff against index" })
 			map("n", "<leader>hD", function()
 				gs.diffthis("~")
